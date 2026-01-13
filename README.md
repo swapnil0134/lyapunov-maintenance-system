@@ -343,3 +343,8 @@ For issues and questions:
 ---
 
 **Note**: Start with `simplified_industrial_monitor.py` for reliable operation. Advanced features are in the `chaos_industrial/` module.
+
+## 🧠 Methodology & Implementation
+* **System Design**: The architectural logic, chaos metric selection (Lyapunov/Entropy), and failure mode definitions were designed by the author.
+* **Implementation**: Code generation and syntax optimization were accelerated using **OpenCode CLI** based on the author's specified algorithms.
+* **Verification**: All mathematical implementations have been manually reviewed to ensure they accurately reflect the intended non-linear dynamics principles.
