@@ -1,0 +1,121 @@
+# Industrial Machine Failure Detection Configuration
+
+# System Parameters
+system:
+  sample_rate: 1000          # Hz
+  window_size: 1000          # Samples for analysis
+  update_interval: 50         # Display update interval (samples)
+  export_interval: 1000       # Data export interval (seconds)
+  live_plotting: false       # Enable live plotting
+
+# Serial Communication
+serial:
+  port: "/dev/ttyUSB0"       # Serial port for sensor connection
+  baud_rate: 115200          # Baud rate
+  timeout: 1                 # Serial timeout (seconds)
+
+# Detection Configuration
+detection:
+  global_threshold: 0.15     # Global anomaly threshold
+  alert_threshold: 0.7       # Alert level threshold
+  critical_threshold: 0.9     # Critical failure threshold
+  
+  failure_modes:
+    bearing_wear:
+      enabled: true
+      weight: 0.3
+      threshold: 0.25
+      frequency_range: [500, 1000]
+      chaos_indicators: ["lyapunov", "correlation_dimension"]
+      
+    unbalance:
+      enabled: true
+      weight: 0.25
+      threshold: 0.2
+      frequency_range: [0, 200]
+      chaos_indicators: ["approximate_entropy"]
+      
+    misalignment:
+      enabled: true
+      weight: 0.25
+      threshold: 0.2
+      frequency_range: [100, 500]
+      chaos_indicators: ["lyapunov"]
+      
+    looseness:
+      enabled: true
+      weight: 0.2
+      threshold: 0.3
+      frequency_range: [200, 800]
+      chaos_indicators: ["correlation_dimension", "approximate_entropy"]
+
+# Alerting Configuration
+alerting:
+  cooldown_period: 30        # Seconds between alerts for same failure
+  escalation_threshold: 0.8   # Threshold for alert escalation
+  min_confidence: 0.6        # Minimum confidence for alerts
+  
+# Sensor Configuration
+sensors:
+  accelerometer:
+    enabled: true
+    range: [-50, 50]          # g-force range
+    sensitivity: 100
+    weight: 0.4
+    
+  vibration:
+    enabled: false
+    range: [-20, 20]          # mm/s range
+    sensitivity: 10
+    weight: 0.3
+    
+  temperature:
+    enabled: false
+    range: [0, 150]           # Celsius
+    sensitivity: 1
+    weight: 0.2
+    
+  acoustic:
+    enabled: false
+    range: [0, 100]           # dB
+    sensitivity: 1
+    weight: 0.1
+
+# Chaos Analysis Parameters
+chaos_analysis:
+  embedding_dimension: 3      # Time-delay embedding dimension
+  time_delay: 1              # Time steps for embedding
+  min_separation: 10         # Minimum separation for Lyapunov calculation
+  cache_size: 100           # Cache size for optimized calculations
+
+# Frequency Analysis Parameters
+frequency_analysis:
+  sample_rate: 1000         # Hz
+  window_length: 256         # FFT window length
+  overlap: 0.5              # Window overlap ratio
+  
+  frequency_bands:
+    very_low: [0, 50]        # Very low frequency (structural)
+    low: [50, 200]          # Low frequency (imbalance, misalignment)
+    mid: [200, 500]         # Mid frequency (gear mesh, bearings)
+    high: [500, 1000]       # High frequency (bearing defects)
+    very_high: [1000, 2000]  # Very high frequency (early bearing damage)
+
+# Visualization
+visualization:
+  save_plots: true          # Save plots to files
+  plot_dpi: 300            # Resolution for saved plots
+  update_rate: 0.5          # Plot update rate (seconds)
+
+# Data Export
+export:
+  format: "csv"             # Export format (csv, json, excel)
+  include_raw_data: false   # Include raw sensor data in exports
+  include_features: true    # Include extracted features
+  compression: true         # Compress exported files
+
+# Simulation (for testing)
+simulation:
+  enabled: false            # Enable simulation mode
+  failure_cycle: 100        # Seconds between failure mode changes
+  noise_level: 0.1         # Sensor noise level
