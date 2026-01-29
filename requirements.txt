@@ -1,0 +1,8 @@
+numpy==2.4.1
+pandas==2.3.3
+scipy==1.17.0
+matplotlib==3.10.8
+PyYAML==6.0.3
+pyserial==3.5
+streamlit==1.53.1
+plotly==6.5.2
