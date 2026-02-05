@@ -85,6 +85,18 @@ python simplified_industrial_monitor.py --simulate
 python simplified_industrial_monitor.py --port /dev/ttyUSB0 --baud 115200
 ```
 
+### Web Dashboard
+
+To run the interactive web dashboard (simulated mode):
+
+```bash
+# Install additional dependencies
+pip install streamlit plotly
+
+# Run dashboard
+streamlit run dashboard.py
+```
+
 ### Advanced Configuration
 
 ```bash
